@@ -725,7 +725,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
       return true;
     }
 
-    if (day.isAfter(start) && day.isBefore(end)) {
+    if (day.isAfter(start) && day.isBefore(end) || _focusedDay.value == day) {
       return true;
     }
 
@@ -733,9 +733,10 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
   }
 
   bool _isDayDisabled(DateTime day) {
-    return day.isBefore(widget.firstDay) ||
-        day.isAfter(widget.lastDay) ||
-        !_isDayAvailable(day);
+    return (day.isBefore(widget.firstDay) ||
+            day.isAfter(widget.lastDay) ||
+            !_isDayAvailable(day)) &&
+        !isSameDay(_focusedDay.value, day);
   }
 
   bool _isDayAvailable(DateTime day) {

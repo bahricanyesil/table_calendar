@@ -75,8 +75,6 @@ class TableCalendarBase extends StatefulWidget {
     this.onPageChanged,
     this.onCalendarCreated,
   })  : assert(!dowVisible || (dowHeight != null && dowBuilder != null)),
-        assert(isSameDay(focusedDay, firstDay) || focusedDay.isAfter(firstDay)),
-        assert(isSameDay(focusedDay, lastDay) || focusedDay.isBefore(lastDay)),
         super(key: key);
 
   @override

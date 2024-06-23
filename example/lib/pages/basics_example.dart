@@ -13,7 +13,7 @@ class TableBasicsExample extends StatefulWidget {
 
 class _TableBasicsExampleState extends State<TableBasicsExample> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _focusedDay = DateTime.now();
+  DateTime _focusedDay = DateTime.now().subtract(Duration(days: 5));
   DateTime? _selectedDay;
 
   @override
@@ -23,24 +23,30 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
         title: Text('TableCalendar - Basics'),
       ),
       body: TableCalendar(
-        firstDay: kFirstDay,
+        firstDay: DateTime.now(),
         lastDay: kLastDay,
         focusedDay: _focusedDay,
         calendarFormat: _calendarFormat,
+        calendarStyle: CalendarStyle(
+          selectedDecoration: BoxDecoration(
+            color: Colors.blue,
+            shape: BoxShape.circle,
+          ),
+        ),
         selectedDayPredicate: (day) {
           // Use `selectedDayPredicate` to determine which day is currently selected.
           // If this returns true, then `day` will be marked as selected.
 
           // Using `isSameDay` is recommended to disregard
           // the time-part of compared DateTime objects.
-          return isSameDay(_selectedDay, day);
+          return isSameDay(_focusedDay, day);
         },
         onDaySelected: (selectedDay, focusedDay) {
           if (!isSameDay(_selectedDay, selectedDay)) {
             // Call `setState()` when updating the selected day
             setState(() {
-              _selectedDay = selectedDay;
-              _focusedDay = focusedDay;
+              _selectedDay = selectedDay.subtract(Duration(days: 6));
+              _focusedDay = focusedDay.subtract(Duration(days: 6));
             });
           }
         },
